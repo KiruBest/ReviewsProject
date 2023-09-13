@@ -1,4 +1,4 @@
-package com.tsutsurin.ui
+package com.tsutsurin.ui.input
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape

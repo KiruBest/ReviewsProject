@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.tsutsurin.authtorization.AuthorizationRoute
+import com.tsutsurin.authtorization.login.LoginRoute
 
 @Composable
 fun MainNavigation(
@@ -13,7 +13,7 @@ fun MainNavigation(
 ) {
     NavHost(navController = navController, startDestination = Screens.AuthorizationScreen.route) {
         composable(Screens.AuthorizationScreen.route) {
-            AuthorizationRoute(onGoBack = { navController.popBackStack() })
+            LoginRoute(onGoBack = { navController.popBackStack() })
         }
     }
 }
