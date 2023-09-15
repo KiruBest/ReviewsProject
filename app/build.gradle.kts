@@ -2,6 +2,7 @@
 plugins {
     alias(libs.plugins.tsutsurin.android.application)
     alias(libs.plugins.tsutsurin.compose)
+    id("kotlin-kapt")
 }
 
 android {

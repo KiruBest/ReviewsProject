@@ -2,8 +2,12 @@
 <resources>
     <!--Login -->
     <string name="login_title">Вход</string>
-    <string name="login_email">Email</string>
-    <string name="login_pwd">Password</string>
+    <string name="login_email">Почта</string>
+    <string name="login_pwd">Пароль</string>
+    <string name="login_forgotPassword">Забыли пароль?</string>
+    <string name="login_signIn">Войти</string>
+    <string name="login_haveAccount">У вас ещё нет аккаунта?</string>
+    <string name="login_signUp">Зарегистрироваться</string>
 
     <!--Registration -->
 </resources>

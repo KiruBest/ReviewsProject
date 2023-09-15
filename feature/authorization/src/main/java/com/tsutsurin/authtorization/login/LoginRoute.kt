@@ -1,8 +1,15 @@
 package com.tsutsurin.authtorization.login
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusState
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
@@ -11,18 +18,26 @@ fun LoginRoute(
     modifier: Modifier = Modifier,
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-    LoginScreen(
-        state = LoginState.Default,
+    val currentState by viewModel.state.collectAsState()
+    val loginScreenListener = LoginScreenListenerImpl(
         onGoBack = onGoBack,
-        onNextClicked = { /*TODO*/ },
+        onForgotPasswordClicked = {},
+        onEmailFieldFocusChange = {},
         onEmailFieldTextChange = { value ->
             viewModel.sendAction(LoginAction.EnteredEmail(value))
         },
+        onPasswordFieldFocusChange = {},
         onPasswordFieldTextChange = { value ->
             viewModel.sendAction(LoginAction.EnteredPassword(value))
         },
-        onEmailFieldFocusChange = { /*TODO*/ },
-        onPasswordFieldFocusChange = { /*TODO*/ }
+        onSignInClicked = {},
+        onSignUpClicked = {}
+    )
+
+    LoginScreen(
+        modifier = modifier,
+        state = currentState,
+        loginScreenListener = loginScreenListener
     )
 }
 
@@ -30,18 +45,20 @@ fun LoginRoute(
 internal fun LoginScreen(
     modifier: Modifier = Modifier,
     state: LoginState,
-    onGoBack: () -> Unit,
-    onNextClicked: () -> Unit,
-    onEmailFieldTextChange: (String) -> Unit,
-    onPasswordFieldTextChange: (String) -> Unit,
-    onEmailFieldFocusChange: (FocusState) -> Unit,
-    onPasswordFieldFocusChange: (FocusState) -> Unit
+    loginScreenListener: LoginScreenListener
 ) {
-    Login(
-        onNextClicked = onNextClicked,
-        onEmailFieldTextChange = onEmailFieldTextChange,
-        onPasswordFieldTextChange = onPasswordFieldTextChange,
-        onEmailFieldFocusChange = onEmailFieldFocusChange,
-        onPasswordFieldFocusChange = onPasswordFieldFocusChange
-    )
+    when (state) {
+        LoginState.Loading -> Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            CircularProgressIndicator(color = Color.Blue, strokeWidth = 2.dp)
+        }
+
+        is LoginState.Login -> Login(
+            modifier = modifier,
+            loginScreenListener = loginScreenListener,
+            loginState = state
+        )
+    }
 }
